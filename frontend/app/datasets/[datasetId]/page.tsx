@@ -15,6 +15,32 @@ function fileKind(type: string): string {
 
 const DEBOUNCE_MS = 300;
 const DEFAULT_LIMIT = 25;
+const LIST_CACHE_KEY_PREFIX = "data-viewer-dataset-list";
+
+function listCacheKey(datasetId: string, filterKey: string) {
+  return `${LIST_CACHE_KEY_PREFIX}-${datasetId}-${filterKey || "all"}`;
+}
+
+function getCachedList(datasetId: string, filterKey: string): PaginatedItems | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = sessionStorage.getItem(listCacheKey(datasetId, filterKey));
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as PaginatedItems;
+    return parsed?.items ? parsed : null;
+  } catch {
+    return null;
+  }
+}
+
+function setCachedList(datasetId: string, filterKey: string, page: PaginatedItems) {
+  if (typeof window === "undefined") return;
+  try {
+    sessionStorage.setItem(listCacheKey(datasetId, filterKey), JSON.stringify(page));
+  } catch {
+    // ignore
+  }
+}
 
 type DraftIngestUIProps = {
   datasetId: string;
@@ -312,6 +338,8 @@ export default function DatasetDetailPage() {
     }
   }, [searchDebounce, searchParams]);
 
+  const filterKey = `${typeParam}|${(searchDebounce ?? "").trim()}|${createdAfter}|${createdBefore}`;
+
   const fetchItems = useCallback(
     async (cursor?: string, append = false) => {
       const limit = DEFAULT_LIMIT;
@@ -327,11 +355,14 @@ export default function DatasetDetailPage() {
       try {
         const result = await api.listDatasetItems(datasetId, params);
         if (append) {
-          setPage((prev) =>
-            prev ? { ...result, items: [...prev.items, ...result.items] } : result
-          );
+          setPage((prev) => {
+            const next = prev ? { ...result, items: [...prev.items, ...result.items] } : result;
+            setCachedList(datasetId, filterKey, next);
+            return next;
+          });
         } else {
           setPage(result);
+          setCachedList(datasetId, filterKey, result);
         }
       } catch (e) {
         setError(e instanceof Error ? e.message : "Failed to load items");
@@ -339,7 +370,7 @@ export default function DatasetDetailPage() {
         if (append) setLoadingMore(false);
       }
     },
-    [datasetId, typeParam, searchDebounce, createdAfter, createdBefore]
+    [datasetId, typeParam, searchDebounce, createdAfter, createdBefore, filterKey]
   );
 
   useEffect(() => {
@@ -359,8 +390,14 @@ export default function DatasetDetailPage() {
 
   useEffect(() => {
     if (!dataset || dataset.status !== "published") return;
+    const cached = getCachedList(datasetId, filterKey);
+    if (cached) {
+      setPage(cached);
+      setError(null);
+      return;
+    }
     fetchItems();
-  }, [datasetId, typeParam, searchDebounce, createdAfter, createdBefore]);
+  }, [dataset?.status, datasetId, filterKey, fetchItems]);
 
   const canShare = user && ["admin", "publisher"].includes(user.role);
   useEffect(() => {

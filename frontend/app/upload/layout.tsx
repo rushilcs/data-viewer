@@ -23,8 +23,8 @@ export default function UploadLayout({
 
   if (loading || !user) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#0a0a0b]">
-        <p className="text-zinc-500">Loading…</p>
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+        <p className="text-slate-500">Loading…</p>
       </div>
     );
   }

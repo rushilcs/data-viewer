@@ -77,6 +77,9 @@ override.tf.json
 # ----- Backend: local dev assets (uploaded files) -----
 backend/dev_assets/
 
+# ----- Data / examples (too large for repo) -----
+data_example/
+
 # ----- IDE / Editor -----
 .idea/
 .vscode/
@@ -99,6 +102,9 @@ htmlcov/
 *.cover
 .hypothesis/
 .pytest_cache/
+
+# ----- Scripts: generated / temp -----
+scripts/pref_slim.json
 
 # ----- Misc -----
 *.bak

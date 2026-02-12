@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Dataset Viewer",
-  description: "Modular Client Dataset Viewer",
+  title: "Verita Dataset Viewer",
+  description: "Curate, view, and share data in one place.",
 };
 
 export default function RootLayout({

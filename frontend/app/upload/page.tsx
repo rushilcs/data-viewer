@@ -17,52 +17,52 @@ export default function UploadLandingPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <p className="text-zinc-500">Loading…</p>;
-  if (error) return <p className="text-red-400">{error}</p>;
+  if (loading) return <p className="text-slate-500">Loading…</p>;
+  if (error) return <p className="text-red-600">{error}</p>;
 
   return (
     <div>
       <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-        <h1 className="text-2xl font-semibold text-zinc-100">Upload</h1>
+        <h1 className="text-2xl font-semibold text-slate-800">Upload</h1>
         <Link
           href="/upload/new"
-          className="shrink-0 rounded-lg bg-emerald-500/90 px-4 py-2.5 font-medium text-zinc-900 shadow-lg shadow-emerald-500/20 hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-zinc-900"
+          className="shrink-0 rounded-xl bg-teal-500 px-4 py-2.5 font-medium text-white shadow-md hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-offset-2 transition"
         >
           Create dataset
         </Link>
       </div>
-      <p className="text-zinc-500 mb-4">Draft datasets you can continue editing and then publish.</p>
+      <p className="text-slate-500 mb-4">Draft datasets you can continue editing and then publish.</p>
       {datasets.length === 0 ? (
-        <p className="text-zinc-500">
+        <p className="text-slate-500">
           No draft datasets. Create one to start the upload wizard.
         </p>
       ) : (
-        <div className="rounded-xl border border-zinc-800 overflow-hidden">
+        <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-sm">
           <table className="w-full text-left">
             <thead>
-              <tr className="border-b border-zinc-800 bg-zinc-900/50">
-                <th className="px-4 py-3 text-sm font-medium text-zinc-400">Name</th>
-                <th className="px-4 py-3 text-sm font-medium text-zinc-400">Created</th>
-                <th className="px-4 py-3 text-sm font-medium text-zinc-400">Status</th>
-                <th className="px-4 py-3 text-sm font-medium text-zinc-400"></th>
+              <tr className="border-b border-slate-200 bg-slate-50">
+                <th className="px-4 py-3 text-sm font-medium text-slate-600">Name</th>
+                <th className="px-4 py-3 text-sm font-medium text-slate-600">Created</th>
+                <th className="px-4 py-3 text-sm font-medium text-slate-600">Status</th>
+                <th className="px-4 py-3 text-sm font-medium text-slate-600"></th>
               </tr>
             </thead>
             <tbody>
               {datasets.map((ds) => (
-                <tr key={ds.id} className="border-b border-zinc-800/80 hover:bg-zinc-800/30">
-                  <td className="px-4 py-3 font-medium text-zinc-100">{ds.name}</td>
-                  <td className="px-4 py-3 text-sm text-zinc-500">
+                <tr key={ds.id} className="border-b border-slate-100 hover:bg-slate-50">
+                  <td className="px-4 py-3 font-medium text-slate-800">{ds.name}</td>
+                  <td className="px-4 py-3 text-sm text-slate-500">
                     {new Date(ds.created_at).toLocaleDateString()}
                   </td>
                   <td className="px-4 py-3">
-                    <span className="inline-flex rounded-full bg-amber-500/20 px-2.5 py-0.5 text-xs font-medium text-amber-400">
+                    <span className="inline-flex rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-700">
                       {ds.status}
                     </span>
                   </td>
                   <td className="px-4 py-3">
                     <Link
                       href={`/upload/${ds.id}`}
-                      className="text-sm font-medium text-emerald-400 hover:text-emerald-300"
+                      className="text-sm font-medium text-teal-600 hover:text-teal-500 rounded-lg px-2 py-1 hover:bg-teal-50"
                     >
                       Continue →
                     </Link>

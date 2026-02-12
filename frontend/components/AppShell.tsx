@@ -16,8 +16,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
   if (loading || !user) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#0a0a0b]">
-        <p className="text-zinc-500">Loading…</p>
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+        <p className="text-slate-500">Loading…</p>
       </div>
     );
   }
@@ -25,16 +25,16 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   const canUpload = user.role === "admin" || user.role === "publisher";
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0a0a0b] text-zinc-100">
-      <header className="border-b border-zinc-800 bg-zinc-900/80 backdrop-blur">
+    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800">
+      <header className="border-b border-slate-200 bg-white shadow-sm">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
           <nav className="flex items-center gap-6">
             <Link
               href="/datasets"
-              className={`font-medium transition ${
+              className={`font-medium transition rounded-lg px-2 py-1 ${
                 pathname?.startsWith("/datasets") && !pathname?.startsWith("/datasets/new")
-                  ? "text-emerald-400"
-                  : "text-zinc-300 hover:text-zinc-100"
+                  ? "text-teal-600 bg-teal-50"
+                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
               }`}
             >
               Datasets
@@ -42,10 +42,10 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             {canUpload && (
               <Link
                 href="/upload"
-                className={`font-medium transition ${
+                className={`font-medium transition rounded-lg px-2 py-1 ${
                   pathname?.startsWith("/upload")
-                    ? "text-emerald-400"
-                    : "text-zinc-300 hover:text-zinc-100"
+                    ? "text-teal-600 bg-teal-50"
+                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
                 }`}
               >
                 Upload
@@ -53,12 +53,12 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             )}
           </nav>
           <div className="flex items-center gap-4">
-            <span className="text-sm text-zinc-500">{user.org_name}</span>
-            <span className="text-sm text-zinc-400">{user.email}</span>
+            <span className="text-sm text-slate-500">{user.org_name}</span>
+            <span className="text-sm text-slate-600">{user.email}</span>
             <button
               type="button"
               onClick={handleLogout}
-              className="text-sm text-zinc-500 hover:text-zinc-300 transition"
+              className="text-sm text-slate-500 hover:text-slate-700 transition rounded-lg px-2 py-1 hover:bg-slate-100"
             >
               Log out
             </button>

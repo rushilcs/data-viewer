@@ -108,6 +108,30 @@ with DatasetClient("http://localhost:8000", "admin@verita.com", "admin123") as c
     client.publish(dataset_id, {"items": [...]})
 ```
 
+### Ingesting the preference dataset with annotations
+
+The repo includes `data_example/preference_dataset/` (web design generations) and a Convex snapshot folder `data_example/snapshot_grandiose*/` (annotator responses). The preference dataset itself does **not** contain annotations; they live only in the snapshot. The script `scripts/ingest_preference_with_annotations.py` joins the two (by task → media → prompt_id from s3Key, model from media name), then creates a dataset and publishes `image_pair_compare` items (A vs B screenshots + annotations).
+
+**Requirements:** `jq` (for a memory-efficient load of the large `dataset.json`), backend and credentials.
+
+```bash
+# From repo root, with backend running and a publisher account
+export DATA_VIEWER_BASE_URL=http://localhost:8000
+export DATA_VIEWER_EMAIL=admin@verita.com
+export DATA_VIEWER_PASSWORD=admin123
+
+# Dry-run: build joined data and print manifest (no API calls)
+python scripts/ingest_preference_with_annotations.py --dry-run
+
+# Ingest only 100 items (for testing); annotations and assets work the same as full run
+python scripts/ingest_preference_with_annotations.py --limit 100
+
+# Ingest full dataset
+python scripts/ingest_preference_with_annotations.py
+```
+
+Options: `--data-dir data_example`, `--limit N` (ingest first N items only), `--dataset-name "My name"`, `--base-url`, `--email`, `--password`. Items include annotator fields (e.g. `aestheticPreference`, `explanation`, `fitsDomain`, `fitsPrompt`, `fitsTone`) in payload metadata and in annotations (schema `preference_v1`).
+
 ---
 
 ## Makefile (backend)
