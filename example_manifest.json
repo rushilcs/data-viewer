@@ -1,0 +1,54 @@
+{
+  "items": [
+    {
+      "type": "image_pair_compare",
+      "title": "Example pair",
+      "summary": "Left vs right",
+      "payload": {
+        "left_asset_id": "REPLACE_WITH_LEFT_ASSET_UUID",
+        "right_asset_id": "REPLACE_WITH_RIGHT_ASSET_UUID",
+        "prompt": "Build a landing page",
+        "metadata": { "model": "gpt-4" }
+      },
+      "annotations": []
+    },
+    {
+      "type": "image_ranked_gallery",
+      "title": "Example gallery",
+      "payload": {
+        "asset_ids": ["REPLACE_WITH_ASSET_UUIDS"],
+        "prompt": "Rank these",
+        "rankings": {
+          "method": "full_rank",
+          "data": {
+            "order": ["REPLACE_WITH_ORDERED_ASSET_UUIDS"],
+            "annotator_count": 2
+          }
+        }
+      },
+      "annotations": []
+    },
+    {
+      "type": "video_with_timeline",
+      "title": "Example video",
+      "payload": {
+        "video_asset_id": "REPLACE_WITH_VIDEO_ASSET_UUID",
+        "metadata": {}
+      },
+      "annotations": [
+        { "schema": "timeline_v1", "data": { "events": [] } }
+      ]
+    },
+    {
+      "type": "audio_with_captions",
+      "title": "Example audio",
+      "payload": {
+        "audio_asset_id": "REPLACE_WITH_AUDIO_ASSET_UUID",
+        "metadata": { "language": "en-US" }
+      },
+      "annotations": [
+        { "schema": "captions_v1", "data": { "segments": [] } }
+      ]
+    }
+  ]
+}

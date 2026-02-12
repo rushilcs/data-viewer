@@ -1,0 +1,19 @@
+# Copy to terraform.tfvars and fill in (do not commit real tfvars with secrets).
+
+environment = "staging"
+aws_region  = "us-east-1"
+
+domain_name         = "api.staging.example.com"
+acm_certificate_arn = "arn:aws:acm:us-east-1:123456789012:certificate/..."
+
+ecs_desired_count = 1
+ecs_cpu           = 512
+ecs_memory_mb     = 1024
+
+rds_instance_class      = "db.t3.micro"
+rds_allocated_storage_gb = 20
+
+s3_bucket_name = "my-org-data-viewer-assets-staging"  # globally unique
+s3_enable_kms  = false
+
+project_name = "data-viewer"

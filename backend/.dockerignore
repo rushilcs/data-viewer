@@ -1,0 +1,32 @@
+# Git and IDE
+.git
+.gitignore
+.cursor
+.venv
+venv
+env
+__pycache__
+*.pyc
+.pytest_cache
+.mypy_cache
+.ruff_cache
+
+# Local dev
+dev_assets
+dev_assets_samples
+*.db
+.env
+.env.*
+
+# Tests and tooling (not needed in image)
+tests
+pytest.ini
+Makefile
+scripts
+*.md
+
+# Docker
+Dockerfile
+.dockerignore
+docker-compose*.yml
+
