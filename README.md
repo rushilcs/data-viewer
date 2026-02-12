@@ -1,9 +1,4 @@
-# Modular Client Dataset Viewer
-
-**Milestone 1:** Read-only viewer with auth, org-scoped datasets/items, signed asset URLs.  
-**Milestone 2:** Ingestion (draft → upload assets → publish), Python SDK/CLI, manifest validation, atomic publish.  
-**Milestone 3:** Filtering/search for items, item-type-counts, normalized timeline/captions in item detail, demo data generator, rich viewers (zoom, timeline seek, caption highlight).  
-**Milestone 4:** Strict validation, multi-tenant isolation, signed URL safety, E2E tests, frontend error handling, single-command local boot.
+# Verita Dataset Viewer
 
 ## Architecture (brief)
 
@@ -206,13 +201,6 @@ To use S3 for assets and optional RDS + Secrets Manager:
 - **Tests:** Backend tests require Postgres (e.g. `viewer_test` DB). Run with `cd backend && make test` (or `PYTHONPATH=. pytest tests/ -v`).
 
 ---
-
-## Acceptance (M1–M4)
-
-- **M1:** Login, list/detail datasets, view items, signed asset URLs, viewer registry.
-- **M2:** Create draft → upload assets (SDK) → publish with manifest; invalid manifest → 422, nothing persisted; assets linked to items; upload token expiry and wrong asset_id rejected; draft datasets visible to admin/publisher; "Publish Dataset (via SDK)" on draft dataset page.
-- **M3:** Filter/search items, item-type-counts, timeline/captions in item detail, demo data, rich viewers.
-- **M4:** Strict Pydantic validation (extra=forbid), manifest errors with path/type/message; no partial publish; state guards (409 for publish twice, upload to published); multi-tenant isolation tests (404 cross-org); signed URL HMAC/expiry tests; E2E test (login → create → upload → publish → list → item → signed URL → stream); frontend 401→login, 404→"Not found or not authorized", signed URL retry once; single-command boot (`scripts/dev.sh`), `make reset`.
 
 ## Tech stack
 
